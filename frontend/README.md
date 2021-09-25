@@ -1,4 +1,4 @@
-# gymkhana_sac_frontend
+# SAC Frontend
 
 ## Project setup
 ```
