@@ -39,27 +39,49 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django.contrib.sites',
+    'social_django',
+    'graphene_django',
+    'rest_framework',
+    'versatileimagefield',
+    'photologue',
+    'sortedm2m',
+    'ckeditor',
+    'ckeditor_uploader',
+    'corsheaders',
+    'hitcount',
+    'django_cleanup',
+    'oauth.apps.OauthConfig',
+    'main.apps.MainConfig',
+    'forum.apps.ForumConfig',
+    'events.apps.EventsConfig',
+    'gallery.apps.GalleryConfig',
+    'news.apps.NewsConfig',
+    'konnekt.apps.KonnektConfig',
+    'festivals.apps.FestivalsConfig',
+    'fixture.apps.FixtureConfig'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'gymkhana_sac.urls'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-]
-
-STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'gymkhana.utils.VueFilesFinder',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfiles', cast=str))
@@ -103,7 +125,7 @@ WSGI_APPLICATION = 'gymkhana_sac.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if config('SQLITE_DB', cast=bool, default=False):
+if config('SQLITE_DB', cast=bool):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
