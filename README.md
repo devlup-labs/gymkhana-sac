@@ -1,1 +1,1 @@
-# gymkhana-sac
+# Student Activity Council IITJ
