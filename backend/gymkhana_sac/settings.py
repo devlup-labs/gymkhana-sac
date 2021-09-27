@@ -52,15 +52,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'hitcount',
     'django_cleanup',
-    'oauth.apps.OauthConfig',
-    'main.apps.MainConfig',
-    'forum.apps.ForumConfig',
-    'events.apps.EventsConfig',
-    'gallery.apps.GalleryConfig',
-    'news.apps.NewsConfig',
-    'konnekt.apps.KonnektConfig',
-    'festivals.apps.FestivalsConfig',
-    'fixture.apps.FixtureConfig'
 ]
 
 MIDDLEWARE = [
@@ -91,6 +82,8 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
 
 MEDIA_URL = '/media/'
+
+CKEDITOR_UPLOAD_PATH = 'content/ckeditor/'
 
 VUE_ROOT = os.path.join(BASE_DIR, config('VUE_PATH', default='../vue', cast=str))
 
@@ -174,10 +167,12 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SITE_ID = 1
