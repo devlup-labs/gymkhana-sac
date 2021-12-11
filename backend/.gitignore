@@ -93,3 +93,6 @@ venv.bak/
 cython_debug/
 
 .devcontainer/
+
+!**/migrations/__init.py
+**/migrations/
