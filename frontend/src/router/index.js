@@ -5,11 +5,11 @@ import Login from "../views/Login.vue";
 import Konnekt from "../views/Konnekt";
 import KonnektHome from "../components/konnekt/KonnektHome";
 import KonnektSearch from "../components/konnekt/KonnektSearch";
-import OfficeBearers from "../views/OfficeBearers";
 import ProfileDetail from "../views/ProfileDetail";
 import ProfileEdit from "../views/ProfileEdit";
+import Board from "../views/Board";
 import Society from "../views/Society";
-import Club from "../views/Club";
+import Committee from "../views/Committee"
 import ForumHome from "../components/forum/ForumHome";
 import ForumTopic from "../components/forum/ForumTopic";
 import Forum from "../views/Forum";
@@ -133,9 +133,9 @@ const routes = [
     component: ProfileEdit
   },
   {
-    path: "/office-bearers",
-    name: "office-bearers",
-    component: OfficeBearers
+    name: "board",
+    path: "/board/:slug",
+    component: Board
   },
   {
     name: "society",
@@ -143,9 +143,9 @@ const routes = [
     component: Society
   },
   {
-    name: "club",
-    path: "/club/:slug",
-    component: Club
+    name: "committee",
+    path: "/committee/:slug",
+    component: Committee
   }
 ];
 

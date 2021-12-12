@@ -9,8 +9,21 @@ export const EVENT_FRAGMENT = gql`
   }
 `;
 
-export const CLUB_EVENTS_FRAGMENT = gql`
-  fragment EventFields on ClubNode {
+export const SOCIETY_EVENTS_FRAGMENT = gql`
+  fragment EventFields on SocietyNode {
+    eventSet {
+      edges {
+        node {
+          ...Event
+        }
+      }
+    }
+  }
+  ${EVENT_FRAGMENT}
+`;
+
+export const COMMITTEE_EVENTS_FRAGMENT = gql`
+  fragment CEventFields on CommitteeNode {
     eventSet {
       edges {
         node {

@@ -1,63 +1,60 @@
 import gql from "graphql-tag";
+import { SOCIETY_EVENTS_FRAGMENT } from "../fragments/eventFragment";
+import { SOCIETY_NEWS_FRAGMENT } from "../fragments/newsFragment";
+import { SOCIETY_DATA_FRAGMENT } from "../fragments/societyDataFragment";
 import { OFFICE_BEARER_FRAGMENT } from "../fragments/officeBearerFragment";
-import { SIZES_FRAGMENT } from "../fragments/sizesFragment";
-import { EVENT_FRAGMENT } from "../fragments/eventFragment";
-import { NEWS_FRAGMENT } from "../fragments/newsFragment";
-import { CLUB_DATA_FRAGMENT } from "../fragments/clubDataFragment";
 
 export const GET_SOCIETY_DATA_QUERY = gql`
   query societies($slugText: String!) {
     societies(slug: $slugText) {
       edges {
         node {
-          name
+          ...SocietyDataFields
           description
-          reportLink
-          secretary {
+          resourcesLink
+          cover {
+            ...Sizes
+          }
+          captain {
             ...OfficeBearerFields
           }
-          jointSecretary {
+          viceCaptainOne {
+            ...OfficeBearerFields
+          }
+          viceCaptainTwo {
+            ...OfficeBearerFields
+          }
+          viceCaptainThree {
             ...OfficeBearerFields
           }
           mentor {
             ...OfficeBearerFields
           }
-          slug
-          cover {
-            ...Sizes
-          }
-          clubSet {
+          coreMembers {
             edges {
               node {
-                __typename
-                ...ClubDataFields
-                cover {
-                  ...Sizes
-                }
+                ...OfficeBearerFields
               }
             }
           }
-          upcomingEvents {
+          ...NewsFields
+          ...EventFields
+          activitySet {
             edges {
               node {
-                ...Event
+                name
+                description
+                customHtml
               }
             }
           }
-          pastNews {
-            edges {
-              node {
-                ...News
-              }
-            }
-          }
+          customHtml
         }
       }
     }
   }
   ${OFFICE_BEARER_FRAGMENT}
-  ${SIZES_FRAGMENT}
-  ${EVENT_FRAGMENT}
-  ${NEWS_FRAGMENT}
-  ${CLUB_DATA_FRAGMENT}
+  ${SOCIETY_EVENTS_FRAGMENT}
+  ${SOCIETY_NEWS_FRAGMENT}
+  ${SOCIETY_DATA_FRAGMENT}
 `;

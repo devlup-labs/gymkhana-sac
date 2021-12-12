@@ -33,59 +33,59 @@ class FacultyAdvisor(models.Model):
         return self.name
 
 
-class Society(models.Model):
+class Board(models.Model):
     # Validators
     valid_year = RegexValidator(r'^[0-9]{4}$', message='Not a valid year!')
     # Model
     name = models.CharField(max_length=128)
     description = RichTextUploadingField(blank=True)
-    cover = VersatileImageField('Cover', upload_to='society_%Y', help_text="Upload high quality picture")
+    cover = VersatileImageField('Cover', upload_to='board_%Y', help_text="Upload high quality picture")
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
-                            help_text="Choose a skin while displaying society page.")
+                            help_text="Choose a skin while displaying board page.")
     secretary = models.ForeignKey(UserProfile, related_name='secy', limit_choices_to={'user__is_staff': True},
                                   null=True, blank=True, on_delete=models.SET_NULL)
     joint_secretary = models.ForeignKey(UserProfile, related_name='joint_secy',
                                         limit_choices_to={'user__is_staff': True}, null=True, blank=True,
                                         on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='smentor', limit_choices_to={'user__is_staff': True},
+    mentor = models.ForeignKey(UserProfile, related_name='bmentor', limit_choices_to={'user__is_staff': True},
                                null=True, blank=True, on_delete=models.SET_NULL, default=None)
     faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    report_link = models.URLField(help_text='Add a drive link to show on society page', null=True, blank=True)
+    report_link = models.URLField(help_text='Add a drive link to show on board page', null=True, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
-                                help_text="Select a carousel gallery to link to this society.")
+                                help_text="Select a carousel gallery to link to this board.")
     custom_html = models.TextField(blank=True, null=True, default=None,
-                                   help_text="Add custom HTML to view on society page.")
-    slug = models.SlugField(unique=True, help_text="This will be used as URL. /society/slug")
+                                   help_text="Add custom HTML to view on board page.")
+    slug = models.SlugField(unique=True, help_text="This will be used as URL. /board/slug")
     is_active = models.BooleanField(default=False)
     year = models.CharField(max_length=4, choices=YEAR_CHOICES, validators=[valid_year])
 
     class Meta:
         ordering = ["name"]
-        verbose_name_plural = "Societies"
+        verbose_name_plural = "Boards"
 
     def get_absolute_url(self):
-        return reverse('main:soc-detail', kwargs={'slug': self.slug})
+        return reverse('main:board-detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name + " - " + str(self.year)
 
 
-class Club(models.Model):
+class Society(models.Model):
     # Choices
     TYPE_CHOICES = (
-        ('C', 'Club'),
+        ('S', 'Society'),
         ('T', 'Team'),
     )
     # Model
     name = models.CharField(max_length=128)
-    society = models.ForeignKey(Society, on_delete=models.CASCADE)
-    ctype = models.CharField(max_length=1, choices=TYPE_CHOICES, default='C', help_text="Specify type as Club or Team.",
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    stype = models.CharField(max_length=1, choices=TYPE_CHOICES, default='S', help_text="Specify type as Society or Team.",
                              verbose_name="Type")
     description = RichTextUploadingField(blank=True)
-    cover = VersatileImageField(upload_to='club_%Y', blank=True, null=True,
+    cover = VersatileImageField(upload_to='society_%Y', blank=True, null=True,
                                 help_text="Upload high quality picture")
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
-                            help_text="Choose a skin while displaying club page.")
+                            help_text="Choose a skin while displaying society page.")
     captain = models.ForeignKey(UserProfile, related_name='captain', limit_choices_to={'user__is_staff': True},
                                 null=True, blank=True, on_delete=models.SET_NULL)
     vice_captain_one = models.ForeignKey(UserProfile, related_name='vice_cap_one',
@@ -97,30 +97,31 @@ class Club(models.Model):
     vice_captain_three = models.ForeignKey(UserProfile, related_name='vice_cap_three',
                                            limit_choices_to={'user__is_staff': True},
                                            blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='cmentor', blank=True, null=True, default=None,
+    mentor = models.ForeignKey(UserProfile, related_name='smentor', blank=True, null=True, default=None,
                                on_delete=models.SET_NULL)
     core_members = models.ManyToManyField(UserProfile, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
-                                help_text="Select a gallery to link to this club.")
+                                help_text="Select a gallery to link to this society.")
     resources_link = models.URLField(blank=True, null=True, default=None)
     custom_html = models.TextField(blank=True, null=True, default=None,
-                                   help_text="Add custom HTML to view on club page.")
-    slug = models.SlugField(unique=True, help_text="This will be used as URL. /club/slug")
+                                   help_text="Add custom HTML to view on society page.")
+    slug = models.SlugField(unique=True, help_text="This will be used as URL. /society/slug")
     published = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["name"]
+        verbose_name_plural = "Societies"
 
     @property
     def year(self):
-        return self.society.year
+        return self.board.year
 
     @property
     def is_active(self):
-        return self.society.is_active
+        return self.board.is_active
 
     def get_absolute_url(self):
-        return reverse('main:club-detail', kwargs={'slug': self.slug})
+        return reverse('main:soc-detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name + " - " + str(self.year)
@@ -134,7 +135,7 @@ class Committee(models.Model):
     )
     # Model
     name = models.CharField(max_length=128)
-    society = models.ForeignKey(Society, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
     ctype = models.CharField(max_length=1, choices=TYPE_CHOICES, default='C', help_text="Specify type as Committee or Team.",
                              verbose_name="Type")
     description = RichTextUploadingField(blank=True)
@@ -153,7 +154,7 @@ class Committee(models.Model):
     vice_captain_three = models.ForeignKey(UserProfile, related_name='committee_vice_cap_three',
                                            limit_choices_to={'user__is_staff': True},
                                            blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='committee_cmentor', blank=True, null=True, default=None,
+    mentor = models.ForeignKey(UserProfile, related_name='committee_mentor', blank=True, null=True, default=None,
                                on_delete=models.SET_NULL)
     core_members = models.ManyToManyField(UserProfile, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
@@ -166,14 +167,15 @@ class Committee(models.Model):
 
     class Meta:
         ordering = ["name"]
+        verbose_name_plural = "Committees"
 
     @property
     def year(self):
-        return self.society.year
+        return self.board.year
 
     @property
     def is_active(self):
-        return self.society.is_active
+        return self.board.is_active
 
     def get_absolute_url(self):
         return reverse('main:committee-detail', kwargs={'slug': self.slug})
@@ -184,8 +186,8 @@ class Committee(models.Model):
 
 class Activity(models.Model):
     name = models.CharField(max_length=64)
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    committee = models.ForeignKey(Committee, on_delete=models.CASCADE)
+    society = models.ForeignKey(Society, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    committee = models.ForeignKey(Committee, on_delete=models.CASCADE, blank=True, null=True, default=None)
     description = RichTextUploadingField()
     custom_html = models.TextField(blank=True, null=True, default=None)
 
@@ -196,7 +198,7 @@ class Activity(models.Model):
         return reverse('main:activity-gallery', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return self.name + ' - ' + self.club.name
+        return self.name
 
 
 class Senate(models.Model):
@@ -213,7 +215,7 @@ class Senate(models.Model):
                                             on_delete=models.SET_NULL)
     report_link = models.URLField(help_text='Add a drive link to show on senate page', null=True, blank=True)
     custom_html = models.TextField(blank=True, null=True, default=None,
-                                   help_text="Add custom HTML to view on society page.")
+                                   help_text="Add custom HTML to view on board page.")
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /senate/slug")
     is_active = models.BooleanField(default=False)
     year = models.CharField(max_length=4, choices=YEAR_CHOICES, validators=[valid_year])
@@ -276,7 +278,8 @@ class SocialLink(models.Model):
         ('git-ic', 'GH'),
         ('yt-ic', 'YT'),
     )
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    society = models.ForeignKey(Society, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    committee = models.ForeignKey(Committee, on_delete=models.CASCADE, blank=True, null=True, default=None)
     social_media = models.CharField(max_length=2, choices=SM_CHOICES)
     link = models.URLField()
 
@@ -284,7 +287,7 @@ class SocialLink(models.Model):
         ordering = ['social_media']
 
     def __str__(self):
-        return self.club.name + ' - ' + self.get_social_media_display()
+        return self.get_social_media_display()
 
     def get_fai(self):
         for key, value in self.FA_CHOICES:

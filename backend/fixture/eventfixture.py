@@ -1,5 +1,6 @@
 import factory
-from fixture.clubfixture import ClubFactory
+from fixture.societyfixture import SocietyFactory
+from fixture.committeefixture import CommitteeFactory
 from test.test_assets import get_random_date
 
 
@@ -11,4 +12,5 @@ class EventFactory(factory.django.DjangoModelFactory):
     description = factory.Faker('sentence', nb_words=30)
     location = factory.Faker('city')
     date = get_random_date()
-    club = factory.SubFactory(ClubFactory)
+    society = factory.SubFactory(SocietyFactory)
+    committee = factory.SubFactory(CommitteeFactory)

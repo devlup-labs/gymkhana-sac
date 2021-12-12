@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 HTML_MINIFY = not DEBUG
-
+MAINTENANCE_MODE = False
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Application definition
@@ -122,6 +122,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries' : {
+                'staticfiles': 'django.templatetags.static', 
+            }
         },
     },
 ]
