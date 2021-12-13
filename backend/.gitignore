@@ -89,9 +89,6 @@ ENV/
 env.bak/
 venv.bak/
 
-# Static folder
-static/
-
 # Cython debug symbols
 cython_debug/
 
