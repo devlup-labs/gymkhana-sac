@@ -21,7 +21,7 @@ class BoardNode(DjangoObjectType):
     class Meta:
         model = Board
         fields = (
-            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'society_set', 'committee_set', 'cover', 'report_link',
+            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'society_set', 'committee_set', 'cover', 'report_link', 'constitution_link',
             'is_active',
             'gallery', 'custom_html')
         filter_fields = ('slug', 'is_active')

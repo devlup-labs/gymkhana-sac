@@ -50,7 +50,8 @@ class Board(models.Model):
     mentor = models.ForeignKey(UserProfile, related_name='bmentor', limit_choices_to={'user__is_staff': True},
                                null=True, blank=True, on_delete=models.SET_NULL, default=None)
     faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    report_link = models.URLField(help_text='Add a drive link to show on board page', null=True, blank=True)
+    report_link = models.URLField(help_text='Add a drive link of annual report to show on board page', null=True, blank=True)
+    constitution_link = models.URLField(help_text='Add a drive link of constitution to show on board page', null=True, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
                                 help_text="Select a carousel gallery to link to this board.")
     custom_html = models.TextField(blank=True, null=True, default=None,
@@ -213,7 +214,8 @@ class Senate(models.Model):
     members = models.ManyToManyField(UserProfile, through='SenateMembership', through_fields=('senate', 'userprofile'))
     coordinator_student = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None,
                                             on_delete=models.SET_NULL)
-    report_link = models.URLField(help_text='Add a drive link to show on senate page', null=True, blank=True)
+    report_link = models.URLField(help_text='Add a drive link of annual report to show on board page', null=True, blank=True)
+    constitution_link = models.URLField(help_text='Add a drive link of constitution to show on board page', null=True, blank=True)
     custom_html = models.TextField(blank=True, null=True, default=None,
                                    help_text="Add custom HTML to view on board page.")
     slug = models.SlugField(unique=True, help_text="This will be used as URL. /senate/slug")
