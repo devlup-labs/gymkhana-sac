@@ -21,6 +21,9 @@
       v-btn(text :to="{name: 'forum-home'}")
         v-icon(:left="$vuetify.breakpoint.mdAndUp") mdi-forum
         span(v-if="$vuetify.breakpoint.mdAndUp") Forum
+      v-btn(text, :to="{ name: 'festivals' }")
+        v-icon(:left="$vuetify.breakpoint.mdAndUp") mdi-party-popper
+        span(v-if="$vuetify.breakpoint.mdAndUp") Fests
     v-spacer
     v-toolbar-items
       v-btn

@@ -65,7 +65,7 @@
           v-row
             FestivalCarousel(:festivalsList="festivals.edges")
     v-container(v-if="!$apollo.queries.boards.loading")
-      v-card(class="accent white--text").elevation-10
+      v-card(class="accent white--text").elevation-10.mt-6
         v-card-title.justify-center.display-1 Boards
       v-col(cols="12" v-if="boards")
         v-row.justify-center
