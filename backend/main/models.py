@@ -232,6 +232,19 @@ class Senate(models.Model):
         return self.name + ' - ' + self.year
 
 
+class SacKeyPeople(models.Model):
+    name = 'Key people - SAC'
+    gen_secy = models.ForeignKey(UserProfile, verbose_name="General Secretary, Student Senate", related_name='gen_secy', limit_choices_to={'user__is_staff': True}, null=True, on_delete=models.SET_NULL)
+    gen_secy_sac = models.ForeignKey(UserProfile, verbose_name="General Secretary, SAC", related_name='gen_secy_sac', limit_choices_to={'user__is_staff': True},
+                                null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name_plural = 'SAC-Key People'
+
+    def __str__(self):
+        return "Key people - SAC"
+
+
 class SenateMembership(models.Model):
     ROLE_CHOICES = (
         ('SECY', 'Student Secretary'),

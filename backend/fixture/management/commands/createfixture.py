@@ -9,6 +9,7 @@ from fixture.answerfixture import AnswerFactory
 from fixture.topicfixture import TopicFactory
 from fixture.societyfixture import SocietyFactory
 from fixture.committeefixture import CommitteeFactory
+from fixture.sackeypeoplefixture import SackeypeopleFactory
 import random
 from main.models import UserProfile
 from django.db.utils import IntegrityError
@@ -34,6 +35,7 @@ class Command(BaseCommand):
         self.create_objects(ContactFactory)
         self.create_objects(AnswerFactory, 20, m2m=True)
         self.create_objects(TopicFactory, 5, m2m=True)
+        self.create_objects(SackeypeopleFactory, 1)
 
     @staticmethod
     def create_objects(klass=None, object_count=5, m2m=False):

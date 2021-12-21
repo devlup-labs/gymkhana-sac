@@ -12,7 +12,7 @@ from forum.models import Topic
 from forum.schema import TopicNode, CreateTopicMutation, AddAnswerMutation, UpvoteMutaiton, DeleteMutation
 from konnekt.schema import Query as KonnektQuery
 from oauth.schema import UserProfileNode, UserNode, ProfileMutation, CreateProfileMutation
-from main.schema import SocietyNode, BoardNode, CommitteeNode, GalleryNode
+from main.schema import SocietyNode, BoardNode, CommitteeNode, GalleryNode, SacKeyPeopleNode
 
 
 class SearchResult(graphene.Union):
@@ -44,6 +44,7 @@ class PublicQuery(graphene.ObjectType):
     societies = DjangoFilterConnectionField(SocietyNode)
     committees = DjangoFilterConnectionField(CommitteeNode)
     boards = DjangoFilterConnectionField(BoardNode)
+    sacKeyPeople = DjangoFilterConnectionField(SacKeyPeopleNode)
     festivals = DjangoFilterConnectionField(FestivalNode)
     home_carousel = graphene.Field(GalleryNode)
     home_gallery = graphene.Field(GalleryNode)

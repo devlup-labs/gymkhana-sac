@@ -6,7 +6,7 @@ from events.models import Event
 from events.schema import EventNode
 from gallery.schema import ImageType
 from gymkhana_sac.utils import build_image_types
-from main.models import Society, Board, Activity, Committee
+from main.models import Society, Board, Activity, Committee, SacKeyPeople
 from graphene_django import DjangoObjectType, DjangoConnectionField
 
 from news.models import News
@@ -95,3 +95,11 @@ class GalleryPhoto(DjangoObjectType):
 
     def resolve_image(self, info):
         return ImageType(sizes=build_image_types(request=info.context, image=self.image, key_set='image'))
+
+
+class SacKeyPeopleNode(DjangoObjectType):
+    class Meta:
+        model = SacKeyPeople
+        fields = '__all__'
+        filter_fields = ('gen_secy', 'gen_secy_sac')
+        interfaces = (relay.Node,)
