@@ -54,7 +54,7 @@ Make sure you have python 3.6 and pipenv installed on your pc.
 
 Then follow these steps:
 ```
-cd <project-directory>/production/
+cd <project-directory>/
 cp .env.example .env
 ```  
 ```

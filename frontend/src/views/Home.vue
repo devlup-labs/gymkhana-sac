@@ -65,12 +65,21 @@
           v-row
             FestivalCarousel(:festivalsList="festivals.edges")
     v-container(v-if="!$apollo.queries.boards.loading")
-      v-col(cols="12")
-        p.display-1.text-center Boards
+      v-card(class="accent white--text").elevation-10.mt-6
+        v-card-title.justify-center.display-1 Boards
       v-col(cols="12" v-if="boards")
         v-row.justify-center
           v-col(cols="12" sm="6" v-for="({ node }, i) in boards.edges" :key="i")
             StripedCard(:node="node")
+    v-container(v-if="!$apollo.queries.sacKeyPeople.loading && sacKeyPeople.edges.length != 0").pa-8
+      v-card(class="accent white--text").elevation-10
+        v-card-title.justify-center.display-1 Key People
+    v-container(v-if="!$apollo.queries.sacKeyPeople.loading")
+      v-row(v-for="({ node }, i) in sacKeyPeople.edges" :key="i").justify-space-around
+        v-col(cols="12" md="4" v-if="node.genSecy")
+          OfficeBearerCard(:avatarSize="120" :profile="node.genSecy" :designation="'General Secretary, Student Senate'")
+        v-col(cols="12" md="4" v-if="node.genSecySac")
+          OfficeBearerCard(:avatarSize="120" :profile="node.genSecySac" :designation="'General Secretary, SAC'")
     v-img(src="../assets/other/background.svg" v-if="!$apollo.queries.homeGallery.loading && homeGallery" :min-height="carouselHeight")
       div.mask.fill-height
         v-container
@@ -89,6 +98,8 @@ import NewsTable from "../components/common/tables/NewsTable";
 import EventTable from "../components/common/tables/EventTable";
 import { GET_HOME_GALLERY_QUERY } from "../graphql/queries/homeGalleryQuery";
 import CustomLightGallery from "../components/common/CustomLightGallery";
+import { GET_SAC_KEY_PEOPLE_DATA_QUERY } from "../graphql/queries/sacKeyPeopleDataQuery";
+import OfficeBearerCard from "../components/OfficeBearerCard";
 
 export default {
   components: {
@@ -96,7 +107,8 @@ export default {
     EventTable,
     NewsTable,
     StripedCard,
-    FestivalCarousel
+    FestivalCarousel,
+    OfficeBearerCard
   },
   apollo: {
     boards: {
@@ -110,6 +122,9 @@ export default {
     },
     homeGallery: {
       query: GET_HOME_GALLERY_QUERY
+    },
+    sacKeyPeople: {
+      query: GET_SAC_KEY_PEOPLE_DATA_QUERY
     }
   },
   data: () => ({

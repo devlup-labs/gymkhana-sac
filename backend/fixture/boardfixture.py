@@ -25,6 +25,8 @@ class BoardFactory(factory.django.DjangoModelFactory):
     mentor = factory.SubFactory(UserProfileFactory)
     faculty_advisor = factory.SubFactory(FacultyAdvisorFactory)
     # gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
+    report_link = factory.Faker('url')
+    constitution_link = factory.Faker('url')
     custom_html = factory.Faker('sentence', nb_words=20)
     slug = factory.Sequence(lambda n: 'board-%d' % n)
     is_active = True
