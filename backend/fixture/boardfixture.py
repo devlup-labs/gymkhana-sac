@@ -14,15 +14,14 @@ SKIN = [
 class BoardFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'main.Board'
-        django_get_or_create = ('name', 'description', 'secretary', 'custom_html', 'slug', 'is_active', 'year',)
+        django_get_or_create = ('name', 'description', 'president', 'custom_html', 'slug', 'is_active', 'year',)
 
     name = factory.Faker('sentence', nb_words=4)
     description = factory.Faker('sentence', nb_words=30)
     cover = factory.django.ImageField(color=random.choice(COLOUR))
     skin = random.choice(SKIN)
-    secretary = factory.SubFactory(UserProfileFactory)
-    joint_secretary = factory.SubFactory(UserProfileFactory)
-    mentor = factory.SubFactory(UserProfileFactory)
+    president = factory.SubFactory(UserProfileFactory)
+    vice_president = factory.SubFactory(UserProfileFactory)
     faculty_advisor = factory.SubFactory(FacultyAdvisorFactory)
     # gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
     report_link = factory.Faker('url')

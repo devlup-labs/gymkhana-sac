@@ -15,13 +15,10 @@ export const GET_BOARD_DATA_QUERY = gql`
           description
           reportLink
           constitutionLink
-          secretary {
+          president {
             ...OfficeBearerFields
           }
-          jointSecretary {
-            ...OfficeBearerFields
-          }
-          mentor {
+          vicePresident {
             ...OfficeBearerFields
           }
           slug

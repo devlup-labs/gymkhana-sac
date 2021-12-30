@@ -29,26 +29,22 @@
             v-card-text(v-if="board.upcomingEvents.edges.length")
               EventTable(:eventsList="board.upcomingEvents.edges")
             v-card-text(v-else).subtitle-1.text-center.ml-4 There are no upcoming events.
-    v-row(class="grey lighten-3").pa-5
+    v-row(class="grey lighten-3" v-if="board.societySet.edges.length").pa-5
       v-col(cols="12" md="8" offset-md="2")
         v-card(class="accent white--text")
           v-card-title.display-1.justify-center Societies
-      v-container(v-if="board.societySet.edges.length").md12
+      v-container().md12
         v-row.pa-3.justify-space-around
           v-col(cols="12" md="4" v-for="({ node }, n) in board.societySet.edges" :key="n")
             StripedCard(:node="node")
-      v-container(v-else).md12.pa-5.title.text-center
-            | There are currently no societies in the board.
-    v-row(class="grey lighten-3").pa-5
+    v-row(class="grey lighten-3" v-if="board.committeeSet.edges.length").pa-5
       v-col(cols="12" md="8" offset-md="2")
         v-card(class="accent white--text")
           v-card-title.display-1.justify-center Committees
-      v-container(v-if="board.committeeSet.edges.length").md12
+      v-container().md12
         v-row.pa-3.justify-space-around
           v-col(cols="12" md="4" v-for="({ node }, n) in board.committeeSet.edges" :key="n")
             StripedCard(:node="node" :is_committee='true')
-      v-container(v-else).md12.pa-5.title.text-center
-            | There are currently no committees in the board.
     v-row.pa-5.justify-center
       v-col(cols="12" sm="10" md="6" lg="4")
         v-card(flat tile text color="#fafafa" )
@@ -59,19 +55,17 @@
             NewsTable(:newsList="board.pastNews.edges")
           v-card-text(v-else).title.text-center
             | There is no news for the current Board.
-    v-row(class="grey lighten-3" v-if="board.mentor || board.secretary || board.jointSecretary").pa-5
+    v-row(class="grey lighten-3" v-if="board.president || board.vicePresident").pa-5
       v-col(cols="12" md="8" offset-md="2")
         v-card(class="accent white--text")
           v-card-title.display-1.justify-center Key People
       v-col(cols="12")
         v-container
           v-row.justify-space-around
-            v-col(cols="12" md="4" v-if="board.jointSecretary")
-              OfficeBearerCard(:avatarSize="120" :profile="board.jointSecretary" :designation="'Joint Secretary'")
-            v-col(cols="12" md="4" v-if="board.secretary")
-              OfficeBearerCard(:avatarSize="120" :profile="board.secretary" :designation="'Secretary'" )
-            v-col(cols="12" md="4" v-if="board.mentor" )
-              OfficeBearerCard(:avatarSize="120" :profile="board.mentor" :designation="'Mentor'")
+            v-col(cols="12" md="4" v-if="board.president")
+              OfficeBearerCard(:avatarSize="120" :profile="board.president" :designation="'President'")
+            v-col(cols="12" md="4" v-if="board.vicePresident")
+              OfficeBearerCard(:avatarSize="120" :profile="board.vicePresident" :designation="'Vice President'" )
 </template>
 
 <script>
@@ -88,19 +82,19 @@ export default {
       query: GET_BOARD_DATA_QUERY,
       variables() {
         return {
-          slugText: this.$route.params.slug,
+          slugText: this.$route.params.slug
         };
       },
-      update: (data) => data.boards,
-    },
+      update: data => data.boards
+    }
   },
   name: "Board",
   components: { StripedCard, NewsTable, OfficeBearerCard, EventTable, Footer },
   computed: {
     board() {
       return this._boards.edges[0].node;
-    },
-  },
+    }
+  }
 };
 </script>
 

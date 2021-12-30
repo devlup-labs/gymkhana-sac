@@ -90,7 +90,7 @@ class CommitteeView(MaintenanceAndNavigationMixin, DetailView):
         events = Event.objects.filter(committee=self.object).filter(published=True).filter(date__gte=timezone.now())[:5]
         activities = Activity.objects.filter(committee=self.object)
         news = News.objects.filter(committee=self.object)[:5]
-        members = self.object.core_members.all()
+        members = self.object.members.all()
         context['event_list'] = events
         context['activity_list'] = activities
         context['news_list'] = news

@@ -161,7 +161,8 @@
             </div>
         </div>
         <section class="container-fluid section team-section">
-            <!--First row-->
+            <!--First row-->mentor = models.ForeignKey(UserProfile, related_name='committee_mentor', blank=True, null=True, default=None,
+                               on_delete=models.SET_NULL)
             <div class="row flex-center mt-3 center-on-small-only">
                 {% for member in member_list %}
                     {% include 'main/mixins/club_member_card_mixin.html' with userprofile=member %}

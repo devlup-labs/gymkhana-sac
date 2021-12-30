@@ -1,9 +1,15 @@
 from django.contrib import admin
-from .models import Society, Board, Committee, SocialLink, Senate, SenateMembership, Activity, Contact, SacKeyPeople
+from .models import Society, Board, Committee, Membership, SocialLink, Senate, SenateMembership, Activity, Contact, SacKeyPeople
 
 
 class MembershipInline(admin.StackedInline):
     model = SenateMembership
+    can_delete = True
+    verbose_name_plural = 'Members'
+
+
+class CommitteeMembershipInline(admin.StackedInline):
+    model = Membership
     can_delete = True
     verbose_name_plural = 'Members'
 
@@ -30,8 +36,9 @@ class SocietyAdmin(admin.ModelAdmin):
 
 
 class CommitteeAdmin(admin.ModelAdmin):
+    inlines = (CommitteeMembershipInline,)
     prepopulated_fields = {"slug": ("name",)}
-    search_fields = ['name', 'society__name']
+    search_fields = ['name', 'board__name']
     list_display = ('__str__', 'board', 'ctype', 'published')
     list_filter = ('published', 'ctype')
 

@@ -3,6 +3,7 @@ import { COMMITTEE_EVENTS_FRAGMENT } from "../fragments/eventFragment";
 import { COMMITTEE_NEWS_FRAGMENT } from "../fragments/newsFragment";
 import { COMMITTEE_DATA_FRAGMENT } from "../fragments/committeeDataFragment";
 import { OFFICE_BEARER_FRAGMENT } from "../fragments/officeBearerFragment";
+import { MEMBERSHIP_DATA_FRAGMENT } from "../fragments/membershipFragment";
 
 export const GET_COMMITTEE_DATA_QUERY = gql`
   query committees($slugText: String!) {
@@ -10,30 +11,35 @@ export const GET_COMMITTEE_DATA_QUERY = gql`
       edges {
         node {
           ...CommitteeDataFields
+          ctype
           description
           resourcesLink
           cover {
             ...Sizes
           }
-          captain {
-            ...OfficeBearerFields
-          }
-          viceCaptainOne {
-            ...OfficeBearerFields
-          }
-          viceCaptainTwo {
-            ...OfficeBearerFields
-          }
-          viceCaptainThree {
-            ...OfficeBearerFields
-          }
-          mentor {
-            ...OfficeBearerFields
-          }
-          coreMembers {
+          members {
             edges {
               node {
-                ...OfficeBearerFields
+                phone
+                cover {
+                  ...Sizes
+                }
+                avatar {
+                  ...Sizes
+                }
+                about
+                user {
+                  firstName
+                  lastName
+                  email
+                }
+                socialLinks {
+                  edges {
+                    node {
+                      ...SocialMedia
+                    }
+                  }
+                }
               }
             }
           }
@@ -57,4 +63,5 @@ export const GET_COMMITTEE_DATA_QUERY = gql`
   ${COMMITTEE_EVENTS_FRAGMENT}
   ${COMMITTEE_NEWS_FRAGMENT}
   ${COMMITTEE_DATA_FRAGMENT}
+  ${MEMBERSHIP_DATA_FRAGMENT}
 `;

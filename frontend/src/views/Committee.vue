@@ -51,29 +51,36 @@
                 v-card-text(v-else).pa-4.title.text-center
                   | There is no news currently
     v-container.pa-8
-      v-flex.md10.offset-md1(v-if="committee.captain || committee.viceCaptainOne || committee.viceCaptainTwo || committee.viceCaptainThree || committee.mentor")
+      v-flex.md10.offset-md1(v-if="committee.secretary || committee.jointSecretaryOne || committee.jointSecretaryTwo || committee.jointSecretaryThree")
         v-card(class="accent white--text").elevation-10
           v-card-title.justify-center.display-1 Key People
-        v-row.justify-space-around
-          v-flex(v-if="committee.captain").md4.xs12
-            CaptainComponent(:profile="committee.captain" :designation="'Captain'")
-          v-flex(v-if="committee.viceCaptainOne").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainOne" :designation="'Vice Captain'")
-          v-flex(v-if="committee.viceCaptainTwo").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainTwo" :designation="'Vice Captain'")
-          v-flex(v-if="committee.viceCaptainThree").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainThree" :designation="'Vice Captain'")
-          v-flex(v-if="committee.mentor").md4.xs12
-            CaptainComponent(:profile="committee.mentor" :designation="'Mentor'")
+        v-row.justify-space-around(v-if="committee.ctype == 'T'")
+          v-flex(v-if="committee.jointSecretaryOne").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryOne" :designation="'Vice Captain'")
+          v-flex(v-if="committee.secretary").md4.xs12
+            CaptainComponent(:profile="committee.secretary" :designation="'Captain'")
+          v-flex(v-if="committee.jointSecretaryTwo").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryTwo" :designation="'Vice Captain'")
+          v-flex(v-if="committee.jointSecretaryThree").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryThree" :designation="'Vice Captain'")
+        v-row.justify-space-around(v-else)
+          v-flex(v-if="committee.jointSecretaryOne").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryOne" :designation="'Joint Secretary'")
+          v-flex(v-if="committee.secretary").md4.xs12
+            CaptainComponent(:profile="committee.secretary" :designation="'Secretary'")
+          v-flex(v-if="committee.jointSecretaryTwo").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryTwo" :designation="'Joint Secretary'")
+          v-flex(v-if="committee.jointSecretaryThree").md4.xs12
+            CaptainComponent(:profile="committee.jointSecretaryThree" :designation="'Joint Secretary'") 
     v-container.pa-5(v-if="committee.customHtml")
       span(v-html="committee.customHtml")
-    v-container.pa-8(v-if="committee.coreMembers.edges.length" fluid)
+    v-container.pa-8(v-if="committee.members.edges.length" fluid)
       v-flex.md8.offset-md2
         v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Volunteers
+          v-card-title.justify-center.display-1 Key People
       v-row.justify-space-around
-        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.coreMembers.edges" :key="j")
-          CoreMemberComponent(:profile="node")
+        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.members.edges" :key="j")
+            CaptainComponent(:profile="node")
 </template>
 
 <script>

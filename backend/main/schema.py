@@ -6,7 +6,7 @@ from events.models import Event
 from events.schema import EventNode
 from gallery.schema import ImageType
 from gymkhana_sac.utils import build_image_types
-from main.models import Society, Board, Activity, Committee, SacKeyPeople
+from main.models import Society, Board, Activity, Committee, SacKeyPeople, Membership
 from graphene_django import DjangoObjectType, DjangoConnectionField
 
 from news.models import News
@@ -21,7 +21,7 @@ class BoardNode(DjangoObjectType):
     class Meta:
         model = Board
         fields = (
-            'name', 'slug', 'secretary', 'joint_secretary', 'description', 'mentor', 'society_set', 'committee_set', 'cover', 'report_link', 'constitution_link',
+            'name', 'slug', 'president', 'vice_president', 'description', 'society_set', 'committee_set', 'cover', 'report_link', 'constitution_link',
             'is_active',
             'gallery', 'custom_html')
         filter_fields = ('slug', 'is_active')
@@ -69,6 +69,12 @@ class CommitteeNode(DjangoObjectType):
     def resolve_cover(self, info):
         return ImageType(sizes=build_image_types(info.context, self.cover, 'festival'))
 
+class MembershipNode(DjangoObjectType):
+    class Meta:
+        model = Membership
+        fields = '__all__'
+        filter_fields = ('role',)
+        interfaces = (relay.Node,)
 
 class ActivityNode(DjangoObjectType):
     class Meta:

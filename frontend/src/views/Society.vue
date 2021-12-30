@@ -51,20 +51,27 @@
                 v-card-text(v-else).pa-4.title.text-center
                   | There is no news currently
     v-container.pa-8
-      v-flex.md10.offset-md1(v-if="society.captain || society.viceCaptainOne || society.viceCaptainTwo || society.viceCaptainThree || society.mentor")
+      v-flex.md10.offset-md1(v-if="society.secretary || society.jointSecretaryOne || society.jointSecretaryTwo || society.jointSecretaryThree")
         v-card(class="accent white--text").elevation-10
           v-card-title.justify-center.display-1 Key People
-        v-row.justify-space-around
-          v-flex(v-if="society.captain").md4.xs12
-            CaptainComponent(:profile="society.captain" :designation="'Captain'")
-          v-flex(v-if="society.viceCaptainOne").md4.xs12
-            CaptainComponent(:profile="society.viceCaptainOne" :designation="'Vice Captain'")
-          v-flex(v-if="society.viceCaptainTwo").md4.xs12
-            CaptainComponent(:profile="society.viceCaptainTwo" :designation="'Vice Captain'")
-          v-flex(v-if="society.viceCaptainThree").md4.xs12
-            CaptainComponent(:profile="society.viceCaptainThree" :designation="'Vice Captain'")
-          v-flex(v-if="society.mentor").md4.xs12
-            CaptainComponent(:profile="society.mentor" :designation="'Mentor'")
+        v-row.justify-space-around(v-if="society.stype == 'T'")
+          v-flex(v-if="society.jointSecretaryOne").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryOne" :designation="'Vice Captain'")
+          v-flex(v-if="society.secretary").md4.xs12
+            CaptainComponent(:profile="society.secretary" :designation="'Captain'")
+          v-flex(v-if="society.jointSecretaryTwo").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryTwo" :designation="'Vice Captain'")
+          v-flex(v-if="society.jointSecretaryThree").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryThree" :designation="'Vice Captain'")
+        v-row.justify-space-around(v-else)
+          v-flex(v-if="society.jointSecretaryOne").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryOne" :designation="'Joint Secretary'")
+          v-flex(v-if="society.secretary").md4.xs12
+            CaptainComponent(:profile="society.secretary" :designation="'Secretary'")
+          v-flex(v-if="society.jointSecretaryTwo").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryTwo" :designation="'Joint Secretary'")
+          v-flex(v-if="society.jointSecretaryThree").md4.xs12
+            CaptainComponent(:profile="society.jointSecretaryThree" :designation="'Joint Secretary'")
     v-container.pa-5(v-if="society.customHtml")
       span(v-html="society.customHtml")
     v-container.pa-8(v-if="society.coreMembers.edges.length" fluid)

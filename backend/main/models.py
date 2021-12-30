@@ -42,13 +42,11 @@ class Board(models.Model):
     cover = VersatileImageField('Cover', upload_to='board_%Y', help_text="Upload high quality picture")
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
                             help_text="Choose a skin while displaying board page.")
-    secretary = models.ForeignKey(UserProfile, related_name='secy', limit_choices_to={'user__is_staff': True},
+    president = models.ForeignKey(UserProfile, related_name='president', limit_choices_to={'user__is_staff': True},
                                   null=True, blank=True, on_delete=models.SET_NULL)
-    joint_secretary = models.ForeignKey(UserProfile, related_name='joint_secy',
+    vice_president = models.ForeignKey(UserProfile, related_name='vice_president',
                                         limit_choices_to={'user__is_staff': True}, null=True, blank=True,
                                         on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='bmentor', limit_choices_to={'user__is_staff': True},
-                               null=True, blank=True, on_delete=models.SET_NULL, default=None)
     faculty_advisor = models.ForeignKey(FacultyAdvisor, blank=True, null=True, default=None, on_delete=models.SET_NULL)
     report_link = models.URLField(help_text='Add a drive link of annual report to show on board page', null=True, blank=True)
     constitution_link = models.URLField(help_text='Add a drive link of constitution to show on board page', null=True, blank=True)
@@ -87,19 +85,17 @@ class Society(models.Model):
                                 help_text="Upload high quality picture")
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
                             help_text="Choose a skin while displaying society page.")
-    captain = models.ForeignKey(UserProfile, related_name='captain', limit_choices_to={'user__is_staff': True},
+    secretary = models.ForeignKey(UserProfile, related_name='soc_secy', limit_choices_to={'user__is_staff': True},
                                 null=True, blank=True, on_delete=models.SET_NULL)
-    vice_captain_one = models.ForeignKey(UserProfile, related_name='vice_cap_one',
+    joint_secretary_one = models.ForeignKey(UserProfile, related_name='soc_joint_secy_one',
                                          limit_choices_to={'user__is_staff': True},
                                          blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    vice_captain_two = models.ForeignKey(UserProfile, related_name='vice_cap_two',
+    joint_secretary_two = models.ForeignKey(UserProfile, related_name='soc_joint_secy_two',
                                          limit_choices_to={'user__is_staff': True},
                                          blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    vice_captain_three = models.ForeignKey(UserProfile, related_name='vice_cap_three',
+    joint_secretary_three = models.ForeignKey(UserProfile, related_name='soc_joint_secy_three',
                                            limit_choices_to={'user__is_staff': True},
                                            blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='smentor', blank=True, null=True, default=None,
-                               on_delete=models.SET_NULL)
     core_members = models.ManyToManyField(UserProfile, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
                                 help_text="Select a gallery to link to this society.")
@@ -144,20 +140,19 @@ class Committee(models.Model):
                                 help_text="Upload high quality picture")
     skin = models.CharField(max_length=32, choices=SKIN_CHOICES, blank=True, default='mdb-skin',
                             help_text="Choose a skin while displaying committee page.")
-    captain = models.ForeignKey(UserProfile, related_name='committee_captain', limit_choices_to={'user__is_staff': True},
-                                null=True, blank=True, on_delete=models.SET_NULL)
-    vice_captain_one = models.ForeignKey(UserProfile, related_name='committee_vice_cap_one',
-                                         limit_choices_to={'user__is_staff': True},
-                                         blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    vice_captain_two = models.ForeignKey(UserProfile, related_name='committee_vice_cap_two',
-                                         limit_choices_to={'user__is_staff': True},
-                                         blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    vice_captain_three = models.ForeignKey(UserProfile, related_name='committee_vice_cap_three',
-                                           limit_choices_to={'user__is_staff': True},
-                                           blank=True, null=True, default=None, on_delete=models.SET_NULL)
-    mentor = models.ForeignKey(UserProfile, related_name='committee_mentor', blank=True, null=True, default=None,
-                               on_delete=models.SET_NULL)
-    core_members = models.ManyToManyField(UserProfile, blank=True)
+    # secretary = models.ForeignKey(UserProfile, related_name='committee_secy', limit_choices_to={'user__is_staff': True},
+    #                             null=True, blank=True, on_delete=models.SET_NULL)
+    # joint_secretary_one = models.ForeignKey(UserProfile, related_name='committee_joint_secy_one',
+    #                                      limit_choices_to={'user__is_staff': True},
+    #                                      blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    # joint_secretary_two = models.ForeignKey(UserProfile, related_name='committee_joint_secy_two',
+    #                                      limit_choices_to={'user__is_staff': True},
+    #                                      blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    # joint_secretary_three = models.ForeignKey(UserProfile, related_name='committee_joint_secy_three',
+    #                                        limit_choices_to={'user__is_staff': True},
+    #                                        blank=True, null=True, default=None, on_delete=models.SET_NULL)
+    members = models.ManyToManyField(UserProfile, through="Membership", through_fields=('committee', 'userprofile'))
+    # core_members = models.ManyToManyField(UserProfile, blank=True)
     gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
                                 help_text="Select a gallery to link to this committee.")
     resources_link = models.URLField(blank=True, null=True, default=None)
@@ -183,6 +178,14 @@ class Committee(models.Model):
 
     def __str__(self):
         return self.name + " - " + str(self.year)
+
+class Membership(models.Model):
+    committee = models.ForeignKey(Committee, on_delete=models.CASCADE)
+    userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    role = models.CharField(max_length=255)
+    
+    def __str__(self):
+        return self.userprofile.user.get_full_name()
 
 
 class Activity(models.Model):
