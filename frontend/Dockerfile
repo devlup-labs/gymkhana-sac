@@ -1,7 +1,12 @@
 # build stage
-FROM node:lts-alpine as build-stage
+FROM node:fermium-alpine as build-stage
 WORKDIR /app
-COPY package*.json ./
 RUN npm install -g @vue/cli @vue/cli-service-global
-RUN npm install
+COPY package*.json ./
+RUN apk add --no-cache --virtual .gyp \
+    python2 \
+    make \
+    g++ \
+    && npm install \
+    && apk del .gyp
 COPY . .
