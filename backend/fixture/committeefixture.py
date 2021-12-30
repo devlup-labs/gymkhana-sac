@@ -21,10 +21,6 @@ class CommitteeFactory(factory.django.DjangoModelFactory):
     description = factory.Faker('sentence', nb_words=30)
     cover = factory.django.ImageField(color=random.choice(COLOUR))
     skin = random.choice(SKIN)
-    # secretary = factory.SubFactory(UserProfileFactory)
-    # joint_secretary_one = factory.SubFactory(UserProfileFactory)
-    # joint_secretary_two = factory.SubFactory(UserProfileFactory)
-    # joint_secretary_three = factory.SubFactory(UserProfileFactory)
     # gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
     resources_link = factory.Faker('url')
     custom_html = factory.Faker('sentence', nb_words=20)

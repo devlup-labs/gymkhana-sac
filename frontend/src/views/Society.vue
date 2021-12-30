@@ -74,13 +74,6 @@
             CaptainComponent(:profile="society.jointSecretaryThree" :designation="'Joint Secretary'")
     v-container.pa-5(v-if="society.customHtml")
       span(v-html="society.customHtml")
-    v-container.pa-8(v-if="society.coreMembers.edges.length" fluid)
-      v-flex.md8.offset-md2
-        v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Volunteers
-      v-row.justify-space-around
-        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in society.coreMembers.edges" :key="j")
-          CoreMemberComponent(:profile="node")
 </template>
 
 <script>
@@ -90,7 +83,6 @@ import Footer from "../components/common/Footer";
 import { GET_SOCIETY_DATA_QUERY } from "../graphql/queries/societyDataQuery";
 import ActivityComponent from "../components/common/ActivityComponent";
 import CaptainComponent from "../components/common/cards/CaptainComponent";
-import CoreMemberComponent from "../components/common/cards/CoreMemberComponent";
 
 export default {
   apollo: {
@@ -106,7 +98,6 @@ export default {
   },
   name: "Society",
   components: {
-    CoreMemberComponent,
     CaptainComponent,
     ActivityComponent,
     Footer,

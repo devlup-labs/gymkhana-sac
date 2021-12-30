@@ -50,37 +50,15 @@
                   NewsTable(:newsList="committee.newsSet.edges")
                 v-card-text(v-else).pa-4.title.text-center
                   | There is no news currently
-    v-container.pa-8
-      v-flex.md10.offset-md1(v-if="committee.secretary || committee.jointSecretaryOne || committee.jointSecretaryTwo || committee.jointSecretaryThree")
-        v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Key People
-        v-row.justify-space-around(v-if="committee.ctype == 'T'")
-          v-flex(v-if="committee.jointSecretaryOne").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryOne" :designation="'Vice Captain'")
-          v-flex(v-if="committee.secretary").md4.xs12
-            CaptainComponent(:profile="committee.secretary" :designation="'Captain'")
-          v-flex(v-if="committee.jointSecretaryTwo").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryTwo" :designation="'Vice Captain'")
-          v-flex(v-if="committee.jointSecretaryThree").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryThree" :designation="'Vice Captain'")
-        v-row.justify-space-around(v-else)
-          v-flex(v-if="committee.jointSecretaryOne").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryOne" :designation="'Joint Secretary'")
-          v-flex(v-if="committee.secretary").md4.xs12
-            CaptainComponent(:profile="committee.secretary" :designation="'Secretary'")
-          v-flex(v-if="committee.jointSecretaryTwo").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryTwo" :designation="'Joint Secretary'")
-          v-flex(v-if="committee.jointSecretaryThree").md4.xs12
-            CaptainComponent(:profile="committee.jointSecretaryThree" :designation="'Joint Secretary'") 
     v-container.pa-5(v-if="committee.customHtml")
       span(v-html="committee.customHtml")
-    v-container.pa-8(v-if="committee.members.edges.length" fluid)
+    v-container.pa-8(v-if="committee.membershipSet.edges.length" fluid)
       v-flex.md8.offset-md2
         v-card(class="accent white--text").elevation-10
           v-card-title.justify-center.display-1 Key People
       v-row.justify-space-around
-        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.members.edges" :key="j")
-            CaptainComponent(:profile="node")
+        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.membershipSet.edges" :key="j")
+            CaptainComponent(:profile="node.userprofile" :designation="node.role")
 </template>
 
 <script>
@@ -90,7 +68,6 @@ import Footer from "../components/common/Footer";
 import { GET_COMMITTEE_DATA_QUERY } from "../graphql/queries/committeeDataQuery";
 import ActivityComponent from "../components/common/ActivityComponent";
 import CaptainComponent from "../components/common/cards/CaptainComponent";
-import CoreMemberComponent from "../components/common/cards/CoreMemberComponent";
 
 export default {
   apollo: {
@@ -106,7 +83,6 @@ export default {
   },
   name: "Committee",
   components: {
-    CoreMemberComponent,
     CaptainComponent,
     ActivityComponent,
     Footer,

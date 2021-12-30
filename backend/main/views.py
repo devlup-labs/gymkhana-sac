@@ -49,7 +49,7 @@ class BoardView(MaintenanceAndNavigationMixin, DetailView):
         news = News.objects.filter(society__board=self.object)[:5]
         context['society_list'] = societies
         context['team_list'] = teams
-        context['committe_list'] = committee
+        context['committee_list'] = committee
         context['event_list'] = events
         context['news_list'] = news
         return context

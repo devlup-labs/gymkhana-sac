@@ -11,7 +11,7 @@
       v-icon( left).pb-1 mdi-phone
       a(:href="`tel:${profile.phone}`").no-decoration {{ profile.phone }}
     v-flex.mt-2.font-weight-light
-      | {{ designation=profile.role }}
+      | {{ designation }}
     v-flex.mt-2.font-weight-regular.subtitle-1.text-center
       | {{ profile.about }}
     v-flex.pa-4

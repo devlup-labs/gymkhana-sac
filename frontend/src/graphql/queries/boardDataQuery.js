@@ -5,6 +5,7 @@ import { EVENT_FRAGMENT } from "../fragments/eventFragment";
 import { NEWS_FRAGMENT } from "../fragments/newsFragment";
 import { SOCIETY_DATA_FRAGMENT } from "../fragments/societyDataFragment";
 import { COMMITTEE_DATA_FRAGMENT } from "../fragments/committeeDataFragment";
+import { FACULTY_FRAGMENT } from "../fragments/facultyFragment";
 
 export const GET_BOARD_DATA_QUERY = gql`
   query boards($slugText: String!) {
@@ -16,7 +17,7 @@ export const GET_BOARD_DATA_QUERY = gql`
           reportLink
           constitutionLink
           president {
-            ...OfficeBearerFields
+            ...FacultyFields
           }
           vicePresident {
             ...OfficeBearerFields
@@ -71,4 +72,5 @@ export const GET_BOARD_DATA_QUERY = gql`
   ${NEWS_FRAGMENT}
   ${SOCIETY_DATA_FRAGMENT}
   ${COMMITTEE_DATA_FRAGMENT}
+  ${FACULTY_FRAGMENT}
 `;

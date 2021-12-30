@@ -28,13 +28,6 @@ export const GET_SOCIETY_DATA_QUERY = gql`
           jointSecretaryThree {
             ...OfficeBearerFields
           }
-          coreMembers {
-            edges {
-              node {
-                ...OfficeBearerFields
-              }
-            }
-          }
           ...NewsFields
           ...EventFields
           activitySet {

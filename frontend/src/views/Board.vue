@@ -63,7 +63,7 @@
         v-container
           v-row.justify-space-around
             v-col(cols="12" md="4" v-if="board.president")
-              OfficeBearerCard(:avatarSize="120" :profile="board.president" :designation="'President'")
+              FacultyCard(:avatarSize="120" :profile="board.president" :designation="'President'")
             v-col(cols="12" md="4" v-if="board.vicePresident")
               OfficeBearerCard(:avatarSize="120" :profile="board.vicePresident" :designation="'Vice President'" )
 </template>
@@ -75,6 +75,7 @@ import OfficeBearerCard from "../components/OfficeBearerCard";
 import NewsTable from "../components/common/tables/NewsTable";
 import { GET_BOARD_DATA_QUERY } from "../graphql/queries/boardDataQuery";
 import StripedCard from "../components/common/cards/StripedCard";
+import FacultyCard from "../components/FacultyCard";
 
 export default {
   apollo: {
@@ -89,7 +90,14 @@ export default {
     }
   },
   name: "Board",
-  components: { StripedCard, NewsTable, OfficeBearerCard, EventTable, Footer },
+  components: {
+    StripedCard,
+    NewsTable,
+    OfficeBearerCard,
+    EventTable,
+    Footer,
+    FacultyCard
+  },
   computed: {
     board() {
       return this._boards.edges[0].node;

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Society, Board, Committee, Membership, SocialLink, Senate, SenateMembership, Activity, Contact, SacKeyPeople
+from .models import Society, Board, Committee, Membership, SocialLink, Senate, SenateMembership, Activity, Contact, SacKeyPeople, Faculty
 
 
 class MembershipInline(admin.StackedInline):
@@ -12,6 +12,10 @@ class CommitteeMembershipInline(admin.StackedInline):
     model = Membership
     can_delete = True
     verbose_name_plural = 'Members'
+
+
+class FacultyAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
 
 class SenateAdmin(admin.ModelAdmin):
@@ -54,6 +58,7 @@ main_models = [
 ]
 
 admin.site.register(Society, SocietyAdmin)
+admin.site.register(Faculty, FacultyAdmin)
 admin.site.register(Board, BoardAdmin)
 admin.site.register(Committee, CommitteeAdmin)
 admin.site.register(Senate, SenateAdmin)

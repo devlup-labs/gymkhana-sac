@@ -35,7 +35,3 @@ class SocietyFactory(factory.django.DjangoModelFactory):
     def users(self, create, extracted, **kwargs):
         if not create:  # pragma: no use
             return
-
-        if extracted:
-            for user in extracted:
-                self.core_members.add(user)
