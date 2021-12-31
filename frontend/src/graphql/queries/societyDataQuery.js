@@ -10,32 +10,23 @@ export const GET_SOCIETY_DATA_QUERY = gql`
       edges {
         node {
           ...SocietyDataFields
+          stype
           description
           resourcesLink
           cover {
             ...Sizes
           }
-          captain {
+          secretary {
             ...OfficeBearerFields
           }
-          viceCaptainOne {
+          jointSecretaryOne {
             ...OfficeBearerFields
           }
-          viceCaptainTwo {
+          jointSecretaryTwo {
             ...OfficeBearerFields
           }
-          viceCaptainThree {
+          jointSecretaryThree {
             ...OfficeBearerFields
-          }
-          mentor {
-            ...OfficeBearerFields
-          }
-          coreMembers {
-            edges {
-              node {
-                ...OfficeBearerFields
-              }
-            }
           }
           ...NewsFields
           ...EventFields

@@ -50,30 +50,15 @@
                   NewsTable(:newsList="committee.newsSet.edges")
                 v-card-text(v-else).pa-4.title.text-center
                   | There is no news currently
-    v-container.pa-8
-      v-flex.md10.offset-md1(v-if="committee.captain || committee.viceCaptainOne || committee.viceCaptainTwo || committee.viceCaptainThree || committee.mentor")
-        v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Key People
-        v-row.justify-space-around
-          v-flex(v-if="committee.captain").md4.xs12
-            CaptainComponent(:profile="committee.captain" :designation="'Captain'")
-          v-flex(v-if="committee.viceCaptainOne").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainOne" :designation="'Vice Captain'")
-          v-flex(v-if="committee.viceCaptainTwo").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainTwo" :designation="'Vice Captain'")
-          v-flex(v-if="committee.viceCaptainThree").md4.xs12
-            CaptainComponent(:profile="committee.viceCaptainThree" :designation="'Vice Captain'")
-          v-flex(v-if="committee.mentor").md4.xs12
-            CaptainComponent(:profile="committee.mentor" :designation="'Mentor'")
     v-container.pa-5(v-if="committee.customHtml")
       span(v-html="committee.customHtml")
-    v-container.pa-8(v-if="committee.coreMembers.edges.length" fluid)
+    v-container.pa-8(v-if="committee.membershipSet.edges.length" fluid)
       v-flex.md8.offset-md2
         v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Volunteers
+          v-card-title.justify-center.display-1 Key People
       v-row.justify-space-around
-        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.coreMembers.edges" :key="j")
-          CoreMemberComponent(:profile="node")
+        v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.membershipSet.edges" :key="j")
+            CaptainComponent(:profile="node.userprofile" :designation="node.role")
 </template>
 
 <script>
@@ -83,7 +68,6 @@ import Footer from "../components/common/Footer";
 import { GET_COMMITTEE_DATA_QUERY } from "../graphql/queries/committeeDataQuery";
 import ActivityComponent from "../components/common/ActivityComponent";
 import CaptainComponent from "../components/common/cards/CaptainComponent";
-import CoreMemberComponent from "../components/common/cards/CoreMemberComponent";
 
 export default {
   apollo: {
@@ -99,7 +83,6 @@ export default {
   },
   name: "Committee",
   components: {
-    CoreMemberComponent,
     CaptainComponent,
     ActivityComponent,
     Footer,

@@ -48,7 +48,8 @@ class Command(BaseCommand):
         elif klass is not None and m2m is True:
             for i in range(object_count):
                 multiple_users = (UserProfile.objects.get(roll='B16CS%d' % random.randint(0, 10)),
-                                  UserProfile.objects.get(roll='B16CS%d' % random.randint(10, 20)),
+                                  UserProfile.objects.get(
+                                      roll='B16CS%d' % random.randint(10, 20)),
                                   )
                 try:
                     klass.create(users=multiple_users)

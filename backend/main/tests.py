@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from test.test_assets import get_random_date, get_temporary_image, TEST_MEDIA_ROOT
-from main.models import FacultyAdvisor, Society, Board, Committee, Activity, Senate, SenateMembership, SocialLink, Contact
+from main.models import Faculty, Society, Board, Committee, Activity, Senate, SenateMembership, SocialLink, Contact
 from main.forms import ContactForm
 from oauth.models import UserProfile
 
@@ -10,7 +10,7 @@ from oauth.models import UserProfile
 class MainModelsTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.fa = FacultyAdvisor.objects.create(name='test_fa')
+        cls.fa = Faculty.objects.create(name='test_fa')
         cls.board_1 = Board.objects.create(name='board', slug='board_1', year='2000', is_active=True)
         cls.society_1 = Society.objects.create(name='society_1', board=cls.board_1, slug='society_1')
         cls.committee_1 = Committee.objects.create(name='committee_1', board=cls.board_1, slug='committee_1')
@@ -23,8 +23,8 @@ class MainModelsTestCase(TestCase):
         cls.social_link_2 = SocialLink.objects.create(society=cls.society_1, social_media='AB', link='https://youtube.com')
         cls.contact_1 = Contact.objects.create(name='user')
 
-    def test_faculty_advisor_str_method(self):
-        """Test Faculty Advisor __str__ method"""
+    def test_faculty_str_method(self):
+        """Test Faculty __str__ method"""
         self.assertEqual(self.fa.__str__(), 'test_fa')
 
     def test_board_str_method(self):
@@ -104,7 +104,7 @@ class MainURLsTestCase(TestCase):
 
         cls.client = Client()
 
-        cls.fa = FacultyAdvisor.objects.create(name='test_fa')
+        cls.fa = Faculty.objects.create(name='test_fa')
         cls.board_1 = Board.objects.create(name='board', slug='board_1', year='2000', is_active=True,
                                                cover=cls.test_image.name)
         cls.society_1 = Society.objects.create(name='society_1', board=cls.board_1, slug='society_1')

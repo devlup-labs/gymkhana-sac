@@ -21,11 +21,6 @@ class CommitteeFactory(factory.django.DjangoModelFactory):
     description = factory.Faker('sentence', nb_words=30)
     cover = factory.django.ImageField(color=random.choice(COLOUR))
     skin = random.choice(SKIN)
-    captain = factory.SubFactory(UserProfileFactory)
-    vice_captain_one = factory.SubFactory(UserProfileFactory)
-    vice_captain_two = factory.SubFactory(UserProfileFactory)
-    vice_captain_three = factory.SubFactory(UserProfileFactory)
-    mentor = factory.SubFactory(UserProfileFactory)
     # gallery = models.ForeignKey(Gallery, blank=True, null=True, on_delete=models.SET_NULL,
     resources_link = factory.Faker('url')
     custom_html = factory.Faker('sentence', nb_words=20)
@@ -39,4 +34,4 @@ class CommitteeFactory(factory.django.DjangoModelFactory):
 
         if extracted:
             for user in extracted:
-                self.core_members.add(user)
+                self.members.add(user)

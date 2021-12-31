@@ -10,32 +10,11 @@ export const GET_COMMITTEE_DATA_QUERY = gql`
       edges {
         node {
           ...CommitteeDataFields
+          ctype
           description
           resourcesLink
           cover {
             ...Sizes
-          }
-          captain {
-            ...OfficeBearerFields
-          }
-          viceCaptainOne {
-            ...OfficeBearerFields
-          }
-          viceCaptainTwo {
-            ...OfficeBearerFields
-          }
-          viceCaptainThree {
-            ...OfficeBearerFields
-          }
-          mentor {
-            ...OfficeBearerFields
-          }
-          coreMembers {
-            edges {
-              node {
-                ...OfficeBearerFields
-              }
-            }
           }
           ...CNewsFields
           ...CEventFields
@@ -49,6 +28,16 @@ export const GET_COMMITTEE_DATA_QUERY = gql`
             }
           }
           customHtml
+          membershipSet {
+            edges {
+              node {
+                role
+                userprofile {
+                  ...OfficeBearerFields
+                }
+              }
+            }
+          }
         }
       }
     }

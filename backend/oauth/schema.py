@@ -7,6 +7,7 @@ from graphql_jwt.decorators import login_required
 from main.schema import ImageType
 from oauth.forms import UserProfileUpdateForm, UserProfileForm
 from oauth.models import UserProfile, SocialLink
+from main.models import Faculty
 
 
 class SocialLinks(DjangoObjectType):
@@ -20,7 +21,8 @@ class UserNode(DjangoObjectType):
     id = graphene.ID(required=True)
 
     class Meta:
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'userprofile')
+        fields = ('id', 'username', 'first_name',
+                  'last_name', 'email', 'userprofile')
         model = User
         interfaces = (relay.Node,)
 
@@ -76,7 +78,40 @@ class UserProfileNode(DjangoObjectType):
 
     @classmethod
     def search(cls, query, info):
-        nodes = cls._meta.model.objects.search(query) if query else cls._meta.model.objects
+        nodes = cls._meta.model.objects.search(
+            query) if query else cls._meta.model.objects
+        return nodes.all()
+
+
+class FacultyProfileNode(DjangoObjectType):
+    name = graphene.String()
+    email = graphene.String()
+    phone = graphene.String()
+    avatar = Field(ImageType)
+    cover = Field(ImageType)
+    id = graphene.ID(required=True)
+
+    class Meta:
+        filter_fields = ['name']
+        model = Faculty
+        fields = ('__all__')
+        interfaces = (relay.Node,)
+
+    def resolve_cover(self, info):
+        from gymkhana_sac.utils import build_image_types
+        return ImageType(sizes=build_image_types(info.context, self.cover, 'festival'))
+
+    def resolve_avatar(self, info):
+        from gymkhana_sac.utils import build_image_types
+        return ImageType(sizes=build_image_types(info.context, self.avatar, 'festival'))
+
+    def resolve_id(self, info):
+        return self.id
+
+    @classmethod
+    def search(cls, query, info):
+        nodes = cls._meta.model.objects.search(
+            query) if query else cls._meta.model.objects
         return nodes.all()
 
 
