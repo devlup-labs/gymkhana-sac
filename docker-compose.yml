@@ -1,22 +1,21 @@
-version: '3'
+version: "3"
 services:
   django:
     build:
       context: backend
       dockerfile: Dockerfile
-    image: 'gymkhana-sac-backend:latest'
-    container_name: django
+    image: "gymkhana-sac-backend:latest"
+    container_name: sac_django
     restart: unless-stopped
     env_file: .env
     environment:
       - DB_HOST=postgresql
-      - MODE=Development-docker
     ports:
-      - 8000:8000
+      - 9999:9999
     volumes:
       - ./backend:/app
     depends_on:
-      - postgresql
+      - dbpostgresql
     networks:
       - app-network
     command:
@@ -26,29 +25,10 @@ services:
         python manage.py flush --no-input
         python manage.py makemigrations
         python manage.py migrate
-        python manage.py runserver 0.0.0.0:8000
-  vue:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    image: 'gymkhana-sac-frontend:latest'
-    container_name: vue
-    restart: unless-stopped
-    environment:
-      - BACKEND_HOST=django
-      - CHOKIDAR_USEPOLLING=true
-    ports:
-      - 8080:8080
-    volumes:
-      - ./frontend:/app
-    depends_on:
-      - django
-    networks:
-      - app-network
-    command: npm run serve
-  postgresql:
-    image: 'bitnami/postgresql:latest'
-    container_name: postgresql
+        python manage.py runserver 0.0.0.0:9999
+  dbpostgresql:
+    image: "bitnami/postgresql:latest"
+    container_name: dbpostgresql
     restart: unless-stopped
     env_file: .env
     environment:
