@@ -27,25 +27,6 @@ services:
         python manage.py makemigrations
         python manage.py migrate
         python manage.py runserver 0.0.0.0:8000
-  vue:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    image: 'gymkhana-sac-frontend:latest'
-    container_name: vue
-    restart: unless-stopped
-    environment:
-      - BACKEND_HOST=django
-      - CHOKIDAR_USEPOLLING=true
-    ports:
-      - 8080:8080
-    volumes:
-      - ./frontend:/app
-    depends_on:
-      - django
-    networks:
-      - app-network
-    command: npm run serve
   postgresql:
     image: 'bitnami/postgresql:latest'
     container_name: postgresql
