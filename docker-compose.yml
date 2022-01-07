@@ -15,7 +15,7 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
-      - postgresql
+      - dbpostgresql
     networks:
       - app-network
     command:
@@ -25,7 +25,7 @@ services:
         python manage.py flush --no-input
         python manage.py makemigrations
         python manage.py migrate
-        python manage.py runserver 0.0.0.0:8000
+        python manage.py runserver 0.0.0.0:9999
   dbpostgresql:
     image: "bitnami/postgresql:latest"
     container_name: postgresql

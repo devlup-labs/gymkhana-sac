@@ -7,16 +7,16 @@ build:
 .env:
 	@cp .env.example .env
 
-dev-launch: .env
+launch: .env
 	@docker-compose up
 
-dev-launch-bg: .env
+launch-bg: .env
 	@docker-compose up -d
 
-dev-stop:
+stop:
 	@docker-compose down
 
-dev-logs:
+logs:
 	@docker-compose logs -f
 
 ex-django:
