@@ -5,7 +5,7 @@ services:
       context: backend
       dockerfile: Dockerfile
     image: "gymkhana-sac-backend:latest"
-    container_name: django
+    container_name: sac_django
     restart: unless-stopped
     env_file: .env
     environment:
@@ -28,7 +28,7 @@ services:
         python manage.py runserver 0.0.0.0:9999
   dbpostgresql:
     image: "bitnami/postgresql:latest"
-    container_name: postgresql
+    container_name: dbpostgresql
     restart: unless-stopped
     env_file: .env
     environment:

@@ -19,8 +19,8 @@ stop:
 logs:
 	@docker-compose logs -f
 
-ex-django:
-	@docker exec -it $$(echo "$$(docker ps --filter "name=django")" | awk 'NR > 1 {print $$1}') sh
+ex-sac_django:
+	@docker exec -it $$(echo "$$(docker ps --filter "name=sac_django")" | awk 'NR > 1 {print $$1}') sh
 
-ex-postgresql:
-	@docker exec -it $$(echo "$$(docker ps --filter "name=postgresql")" | awk 'NR > 1 {print $$1}') sh
+ex-dbpostgresql:
+	@docker exec -it $$(echo "$$(docker ps --filter "name=dbpostgresql")" | awk 'NR > 1 {print $$1}') sh
