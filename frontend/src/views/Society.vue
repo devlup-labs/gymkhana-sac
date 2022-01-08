@@ -53,7 +53,7 @@
     v-container.pa-8
       v-flex.md10.offset-md1(v-if="society.secretary || society.jointSecretaryOne || society.jointSecretaryTwo || society.jointSecretaryThree")
         v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Key People
+          v-card-title.justify-center.display-1 Student Coordinators
         v-row.justify-space-around(v-if="society.stype == 'T'")
           v-flex(v-if="society.jointSecretaryOne").md4.xs12
             CaptainComponent(:profile="society.jointSecretaryOne" :designation="'Vice Captain'")

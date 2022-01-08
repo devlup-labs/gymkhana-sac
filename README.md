@@ -1,26 +1,4 @@
-# Student Activity Council IITJ
-
-## Run Using Docker
-Ensure that you have installed [Docker](https://docs.docker.com/install/) (with [Docker Compose](https://docs.docker.com/compose/install/)).  
-- Build the images
-```
-cd <project-directory>
-make build
-```  
-Run the containers:
-```
-make dev-launch
-```
-To run the containers in the background:  
-```
-make dev-launch-bg
-```
-
-After executing `make dev-launch` or `make dev-launch-bg`, you will be running:
-* The application (frontend) on http://localhost:8080 
-* The API Server (backend) on http://localhost:8000  
-
-## Run Without Docker  
+# Student Activity Council, IIT Jodhpur
 
 ### Setup Frontend
 
@@ -84,3 +62,22 @@ This will populate the database with random values for testing:
 ```
 python manage.py createfixture 
 ```  
+
+## Run Using Docker (Only backend)
+Ensure that you have installed [Docker](https://docs.docker.com/install/) (with [Docker Compose](https://docs.docker.com/compose/install/)).  
+- Build the images
+```
+cd <project-directory>
+make build
+```  
+Run the containers:
+```
+make launch
+```
+To run the containers in the background:  
+```
+make launch-bg
+```
+
+After executing `make dev-launch` or `make dev-launch-bg`, you will be running:
+* The API Server (backend) on http://localhost:9999  

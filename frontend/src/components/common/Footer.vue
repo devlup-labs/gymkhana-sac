@@ -7,7 +7,7 @@
             v-layout(row)
               v-container
                 p ABOUT US
-                p Student Gymkhana IITJ
+                p Student Activity Council, IIT Jodhpur
                    
           v-col(cols="12" md="6").text-center
             v-layout(row)
