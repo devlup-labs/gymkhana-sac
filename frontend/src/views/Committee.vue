@@ -55,7 +55,7 @@
     v-container.pa-8(v-if="committee.membershipSet.edges.length" fluid)
       v-flex.md8.offset-md2
         v-card(class="accent white--text").elevation-10
-          v-card-title.justify-center.display-1 Key People
+          v-card-title.justify-center.display-1 Student Coordinators
       v-row.justify-space-around
         v-col(cols="12" md="6" lg="4" v-for="({ node }, j) in committee.membershipSet.edges" :key="j")
             CaptainComponent(:profile="node.userprofile" :designation="node.role")

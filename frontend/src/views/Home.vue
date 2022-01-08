@@ -21,17 +21,17 @@
             column
             transition="fade-transition"
           ).white--text.text-center.font-weight-light.topbar-margin
-            v-flex Students' Gymkhana
+            v-flex Student Activity Council
             v-flex IIT Jodhpur
     v-container.pa-10
       v-row
         v-col
-          h1.mb-2.display-1.text-center About Students' Gymkhana
+          h1.mb-2.display-1.text-center About Student Activity Council
           v-row.justify-center
             v-col(sm="6" md="4")
-              v-img(src="../assets/workstation-336369.jpg" )
+              v-img(src="../assets/sac_logo.png" )
             v-col(md="6" align-self="center")
-              p.subtitle-1.text-center  Students' Gymkhana, IIT Jodhpur is the governing body that looks after all student activities.
+              p.subtitle-1.text-center  Student Activity Council, IIT Jodhpur is the governing body that looks after all student activities.
       v-row(v-if="!$apollo.queries.boards.loading").mt-4
         v-col
           v-row.justify-center
